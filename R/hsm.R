@@ -1,12 +1,11 @@
-#' Solves proximal operator of latent group Lasso in Hierarchical Sparse
+#' Solves proximal operator of latent group lasso in Hierarchical Sparse
 #' Modeling.
 #'
-#' Solves proximal operator of the latent group Lasso appearing in Yan &
-#' Bien (2015)
+#' Solves proximal operator of the latent group Lasso appearing in Yan & Bien (2017)
 #' \deqn{min_\beta || y - \beta ||_2^2 + lam * \Omega(\beta; w)}
 #' where \eqn{\Omega(\beta; w) = min_{sum_l v^(l) = \beta; supp(v^(l))
 #' \subset g_l} w_l * || v^(l) ||_2} is known as the latent group lasso penalty
-#'  as defined in \href{http://www.machinelearning.org/archive/icml2009/papers/471.pdf}{Jacob et al. (2009)}. In the problem, \eqn{\beta} is a length-\eqn{p}
+#'  as defined in Jacob et al. (2009). In the problem, \eqn{\beta} is a length-\eqn{p}
 #'  parameter vector and its elements are embedded in a directed acyclic graph
 #'  (DAG). The desired sparsity pattern is a subgraph of the DAG such that if
 #'  \eqn{\beta_i} embedded in node \eqn{i} are set to zero, all the parameters
@@ -16,7 +15,7 @@
 #'  path graph, and performing block coordinate descent across the path graphs.
 #'  See Section 4.3 of the paper for more details and explanations.
 #'
-#' See Section 2.2 of paper for problem setup and group structure specifications.
+#' See Section 2.2 of the paper for problem setup and group structure specifications.
 #' See Figure 7 in Section 4.3 for an example of decomposing DAG into path
 #' graphs. See Algorithm 4 in paper for details of the path-based BCD.
 #'
@@ -62,22 +61,27 @@
 #' @return Returns an estimate of the solution to the proximal operator of
 #' the latent group Lasso. The returned value is an exact solution if the
 #' DAG is a directed path graph.
-#' \describe{
-#' \item{\code{beta}: }{A length-\code{p} vector giving solution to the proximal
+#' \item{beta}{A length-\code{p} vector giving solution to the proximal
 #' operator defined above.}
-#' \item{\code{ite}: }{Number of cycles of BCD performed.}
-#' \item{\code{penalval}: }{Value of the penalty \eqn{lam * \Omega(\beta; w)} if
+#' \item{ite}{Number of cycles of BCD performed.}
+#' \item{penalval}{Value of the penalty \eqn{lam * \Omega(\beta; w)} if
 #' \code{get.penalval} is \code{TRUE}, otherwise \code{NA}.}
-#' \item{\code{assign}: }{Value of \code{assign}.}
-#' \item{\code{w.assign}: }{Value of \code{w.assign}.}
-#' \item{\code{beta.ma}: }{\code{n.paths}-by-\code{p} matrix of decomposed beta
+#' \item{assign}{Value of \code{assign}.}
+#' \item{w.assign}{Value of \code{w.assign}.}
+#' \item{beta.ma}{\code{n.paths}-by-\code{p} matrix of decomposed beta
 #' values for all the decomposed path graphs. The beta values are from the last iteration
 #' in \code{\link{hsm}}.}
-#' }
 #'
 #' @export
 #'
-#' @useDynLib hsm
+#' @useDynLib hsm, .registration = TRUE
+#'
+#' @references Yan, X. and Bien, J. (2017). Hierarchical Sparse Modeling:
+#' A Choice of Two Group Lasso Formulations. Statist. Sci. 32,
+#' no. 4, 531--560. doi:10.1214/17-STS622.
+#' @references Jacob, L., Obozinski, G. and Vert, J. (2009). Group Lasso with Overlap and Graph Lasso.
+#' In Proceedings of the 26th Annual International Conference on Machine Learning.
+#' ICML'09 433-440. ACM, New York.
 #'
 #' @seealso \code{\link{hsm.path}}
 #' @seealso \code{\link{paths}}
